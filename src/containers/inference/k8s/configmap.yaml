@@ -1,0 +1,21 @@
+# 共享配置（灌库任务与推理服务共用）。apply 前按需替换占位值。
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: damage-config
+  namespace: default
+data:
+  REGION: "cn-north-4"
+  OS_HOST: "10.0.2.30:9200"                        # CSS 内网访问地址（IP:PORT，节点端点，非域名）
+  OS_INDEX: "repair-cost-data"
+  EMBEDDING_DIM: "1024"                      # 须与 EMBEDDING_MODEL 输出维度一致
+  OBS_BUCKET: "auto-damage-frontend-9c6d2e5c"            # 前端展示桶（图片公读）
+  OBS_BUCKET_SOURCE: "auto-damage-source-9c6d2e5c"       # 灌库源桶
+  OBS_FOLDER: "repair-data/"
+  APP_BASE_URL: "https://auto-damage-frontend-9c6d2e5c.obs.cn-north-4.myhuaweicloud.com"
+  CHAT_MODEL: "DeepSeek-V4-Flash"            # MaaS 已开通的对话模型（纯文本）
+  EMBEDDING_MODEL: "BGE-M3"                  # MaaS 已开通的嵌入模型（1024 维）
+  MAAS_CHAT_BASE_URL: "https://api.modelarts-maas.com/v2"   # chat completions 端点（v2）
+  MAAS_EMBED_BASE_URL: "https://api.modelarts-maas.com/v1"  # embeddings 端点（v1）
+  VISION_ENABLED: "false"                    # true=多模态模型可收图；false=纯文本模型忽略图片
+  MULTIMODAL_EMBEDDING: "false"              # true=多模态嵌入（方案 B/C）；false=仅文本（默认）

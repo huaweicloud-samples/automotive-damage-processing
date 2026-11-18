@@ -1,0 +1,27 @@
+# ============================================================================
+# terraform.tfvars.example — 变量示例文件（请勿提交真实凭据）
+# 使用方法：
+#   1. 复制本文件为 terraform.tfvars：`cp terraform.tfvars.example terraform.tfvars`
+#   2. 把占位符替换为真实值；terraform.tfvars 已加入 .gitignore
+# ============================================================================
+
+# 华为云区域（默认 cn-north-4）
+region = "cn-north-4"
+
+# 资源命名前缀（会拼到所有资源 name 前）
+project_name = "auto-damage"
+
+# 华为云账号域名（用于 Agency 委托）
+domain_name = "your-huaweicloud-domain"
+
+# SWR 组织名（镜像仓库路径的一部分）
+swr_project = "your-project"
+
+# CSS(OpenSearch) 集群 admin 密码
+css_password = "<css-password>"
+
+# CCE 节点 root 密码（也可改用 key_pair）
+node_password = "<node-password>"
+
+# 入站放通范围（调试期建议收窄到运维者出口 IP）
+allowed_ingress_cidr = "0.0.0.0/0"

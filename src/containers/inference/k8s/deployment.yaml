@@ -1,0 +1,44 @@
+# inference 推理 UI 常驻服务（CCE Deployment）
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: damage-inference
+  namespace: default
+  labels:
+    app: damage-inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: damage-inference
+  template:
+    metadata:
+      labels:
+        app: damage-inference
+    spec:
+      imagePullSecrets:
+        - name: swr-secret
+      containers:
+        - name: inference
+          image: swr.cn-north-4.myhuaweicloud.com/auto-damage-swr/damage-repo:inference-v3
+          imagePullPolicy: Always  # 同 tag 也重拉，避免节点缓存旧镜像
+          ports:
+            - containerPort: 8501
+          envFrom:
+            - configMapRef:
+                name: damage-config
+            - secretRef:
+                name: damage-secret
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8501
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
