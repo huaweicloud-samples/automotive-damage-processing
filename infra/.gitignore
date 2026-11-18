@@ -1,0 +1,12 @@
+# 敏感变量（真实 AK/SK 注入与生成的密码）——禁止入库
+.secrets.auto.tfvars
+*.tfvars
+
+# terraform 本地状态与插件缓存
+.terraform/
+*.tfstate
+*.tfstate.backup
+terraform.tfstate*
+
+# 本地工具产物
+dev.rc

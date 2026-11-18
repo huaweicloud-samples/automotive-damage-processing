@@ -1,0 +1,31 @@
+# ingestion 一次性灌库任务（CCE Job）
+# 先确保 inference 的 ConfigMap/Secret 已 apply（共享配置）。
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: damage-ingestion
+  namespace: default
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: swr-secret
+      containers:
+        - name: ingestion
+          image: swr.cn-north-4.myhuaweicloud.com/auto-damage-swr/damage-repo:ingestion
+          imagePullPolicy: Always  # 同 tag 也重拉，避免节点缓存旧镜像
+          envFrom:
+            - configMapRef:
+                name: damage-config
+            - secretRef:
+                name: damage-secret
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"

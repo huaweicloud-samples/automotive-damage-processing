@@ -1,0 +1,7 @@
+openai==1.30.0
+httpx==0.27.2  # openai 1.30 不兼容 httpx>=0.28（proxies 参数被移除）
+opensearch-py==2.4.2
+esdk-obs-python==3.25.8  # 3.23.x 与 Python 3.12 不兼容（HTTPSConnection check_hostname）
+Pillow==10.3.0
+requests==2.32.0
+streamlit==1.33.0
